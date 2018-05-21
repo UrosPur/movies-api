@@ -6,6 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Movie;
 
+
 class MoviesController extends Controller
 {
     /**
@@ -34,8 +35,44 @@ class MoviesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+//title, director, duration i releaseDate su required
+//duration mora biti broj između 1 i 500
+//imageUrl mora biti URL
+//Film sa istim title i releaseDate ne može biti dva puta dodat u bazu
+
+
+//$request->validate([
+//'title' => 'required|unique:posts|max:255',
+//'author.name' => 'required',
+//'author.description' => 'required',
+//]);
+
+
+//$this->validate($request, [
+//'email' => 'required|email',
+//]);
+
     public function store(Request $request)
     {
+
+//        $this->validate($request, [
+//
+//            'title' => 'required|unique:movies',
+//            'director' => 'required|unique:movies',
+//            'duration' => 'required|min:1|max:500',
+//            'releaseDate' => 'required',
+//            'imgUrl' => 'url',
+//        ]);
+
+
+        $request->validate([
+            'title' => 'required|unique:movies',
+            'director' => 'required|unique:movies',
+            'duration' => 'required|min:1|max:500',
+            'releaseDate' => 'required',
+            'imgUrl' => 'url',
+]);
+
         $movie= new Movie();
 
 
