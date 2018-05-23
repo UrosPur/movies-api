@@ -19,15 +19,34 @@ class MoviesController extends Controller
 
     {
 
+//        var_dump($request->take);
+//        dd($request->skip);
 //        dd($request->title);
 
-        $searchPar = $request->title;
+        $searchTitle = $request->title;
+        $skip = $request->skip;
+        $take = $request->take;
 
-        if(isset($searchPar)) {
+        if (isset($searchTitle)) {
 
-            return Movie:: where('title', $searchPar)->get();
+            return Movie:: where('title', $searchTitle)->get();
 
         }
+
+        if (isset($skip) || isset($take)) {
+
+
+            return Movie::skip($skip)->take($take)->get();
+
+        }
+
+
+//        $count = Movie::count();
+//        $skip = 2;
+//        $limit = $count - $skip; // the limit
+//        $movies= Movie::skip(2)->take($limit)->get();
+
+
         return Movie::all();
     }
 
@@ -44,7 +63,7 @@ class MoviesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
 
@@ -67,9 +86,9 @@ class MoviesController extends Controller
             'duration' => 'required|min:1|max:500',
             'releaseDate' => 'required',
             'imgUrl' => 'url',
-]);
+        ]);
 
-        $movie= new Movie();
+        $movie = new Movie();
 
 
         $movie->title = $request->input('title');
@@ -90,7 +109,7 @@ class MoviesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -101,7 +120,7 @@ class MoviesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -112,8 +131,8 @@ class MoviesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -139,7 +158,7 @@ class MoviesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
