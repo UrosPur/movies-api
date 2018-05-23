@@ -14,8 +14,20 @@ class MoviesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
+
+
     {
+
+//        dd($request->title);
+
+        $searchPar = $request->title;
+
+        if(isset($searchPar)) {
+
+            return Movie:: where('title', $searchPar)->get();
+
+        }
         return Movie::all();
     }
 
@@ -35,22 +47,6 @@ class MoviesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-//title, director, duration i releaseDate su required
-//duration mora biti broj između 1 i 500
-//imageUrl mora biti URL
-//Film sa istim title i releaseDate ne može biti dva puta dodat u bazu
-
-
-//$request->validate([
-//'title' => 'required|unique:posts|max:255',
-//'author.name' => 'required',
-//'author.description' => 'required',
-//]);
-
-
-//$this->validate($request, [
-//'email' => 'required|email',
-//]);
 
     public function store(Request $request)
     {
